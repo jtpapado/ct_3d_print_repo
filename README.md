@@ -6,6 +6,22 @@ ready for 3D printing.
 
 ![Simulated Schatzker II tibial plateau fracture](outputs/fractures/simulated_knee/fracture_top.png)
 
+## Quick view: interactive 3D models
+
+Click a picture or **Open 3D** to rotate the model in your browser (drag to rotate, scroll to zoom,
+click legend entries to hide parts). Each page is ~8 MB, so give it a few seconds to load.
+
+| | |
+|:---:|:---:|
+| [![Anatomic axis](outputs/fractures/simulated_knee/axis/axis_oblique.png)](https://raw.githack.com/jtpapado/ct_3d_print_repo/main/outputs/fractures/simulated_knee/axis/axis_3d.html) | [![TKA cut jig](outputs/fractures/simulated_knee/tka_cut/jig_oblique.png)](https://raw.githack.com/jtpapado/ct_3d_print_repo/main/outputs/fractures/simulated_knee/tka_cut/tka_cut_3d.html) |
+| **Tibial anatomic axis**<br>[Open 3D](https://raw.githack.com/jtpapado/ct_3d_print_repo/main/outputs/fractures/simulated_knee/axis/axis_3d.html) · [Pages](https://jtpapado.github.io/ct_3d_print_repo/outputs/fractures/simulated_knee/axis/axis_3d.html) · [Download](https://github.com/jtpapado/ct_3d_print_repo/raw/main/outputs/fractures/simulated_knee/axis/axis_3d.html) | **TKA tibial cut: jig + cut plane**<br>[Open 3D](https://raw.githack.com/jtpapado/ct_3d_print_repo/main/outputs/fractures/simulated_knee/tka_cut/tka_cut_3d.html) · [Pages](https://jtpapado.github.io/ct_3d_print_repo/outputs/fractures/simulated_knee/tka_cut/tka_cut_3d.html) · [Download](https://github.com/jtpapado/ct_3d_print_repo/raw/main/outputs/fractures/simulated_knee/tka_cut/tka_cut_3d.html) |
+| [![After the TKA cut](outputs/fractures/simulated_knee/tka_cut/after_cut_implant.png)](https://raw.githack.com/jtpapado/ct_3d_print_repo/main/outputs/fractures/simulated_knee/tka_cut/tka_after_cut_3d.html) | [![Plate fixation](outputs/fractures/simulated_knee/plate_fixation/plate_oblique.png)](https://raw.githack.com/jtpapado/ct_3d_print_repo/main/outputs/fractures/simulated_knee/plate_fixation/plate_fixation_3d.html) |
+| **After the cut: 9 mm tibial component**<br>[Open 3D](https://raw.githack.com/jtpapado/ct_3d_print_repo/main/outputs/fractures/simulated_knee/tka_cut/tka_after_cut_3d.html) · [Pages](https://jtpapado.github.io/ct_3d_print_repo/outputs/fractures/simulated_knee/tka_cut/tka_after_cut_3d.html) · [Download](https://github.com/jtpapado/ct_3d_print_repo/raw/main/outputs/fractures/simulated_knee/tka_cut/tka_after_cut_3d.html) | **Plate + TriLock screw fixation**<br>[Open 3D](https://raw.githack.com/jtpapado/ct_3d_print_repo/main/outputs/fractures/simulated_knee/plate_fixation/plate_fixation_3d.html) · [Pages](https://jtpapado.github.io/ct_3d_print_repo/outputs/fractures/simulated_knee/plate_fixation/plate_fixation_3d.html) · [Download](https://github.com/jtpapado/ct_3d_print_repo/raw/main/outputs/fractures/simulated_knee/plate_fixation/plate_fixation_3d.html) |
+
+- **Open 3D** works straight away (served by [raw.githack.com](https://raw.githack.com), a free CDN for public GitHub files).
+- **Pages** links work once GitHub Pages is enabled: *Settings → Pages → Deploy from a branch → main, / (root)*.
+- **Download** saves the file; double-click it to open it in your browser.
+
 > **Not for clinical use.** This is an educational/research project. The fractured knee
 > model is **simulated** (a real intact knee, broken programmatically). It is not
 > patient data and not a medical device.
