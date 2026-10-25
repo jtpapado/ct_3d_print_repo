@@ -9,3 +9,4 @@ SimpleITK
 scikit-image
 pyvista
 pymeshfix
+plotly

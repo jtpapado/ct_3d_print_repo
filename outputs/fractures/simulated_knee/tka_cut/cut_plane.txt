@@ -1,0 +1,4 @@
+# row1: point on cut plane (mm), row2: plane normal (up), row3: stylus contact point
+-66.4799 -143.1798 626.1675
+-0.0790 -0.0632 0.9949
+-67.1908 -143.7483 635.1213

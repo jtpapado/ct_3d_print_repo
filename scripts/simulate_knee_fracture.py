@@ -159,6 +159,24 @@ def main(mat_path, out_dir, side="R", platif_dir=None):
     moved[m3 & (moved == 0)] = 3
     np.save(os.path.join(out_dir, "labels.npy"), moved)
 
+    # Reduced (anatomic) fragments for fixation planning, and the void left under the
+    # depressed piece once it is elevated (bone it was crushed into is gone -> graft)
+    red = os.path.join(out_dir, "reduced")
+    os.makedirs(red, exist_ok=True)
+    back_up = move(moved == 3, np.eye(3), np.zeros(3), np.array([0, 0, DEPRESS_DROP]), origin)
+    void = (lab == 3) & ~back_up
+    for name, msk in [("split_reduced", lab == 2), ("depressed_reduced", back_up), ("graft_void", void)]:
+        if msk.sum() > 20:
+            to_mesh(msk, origin).save(os.path.join(red, f"{name}.stl"))
+    json_path = os.path.join(red, "displacement.json")
+    import json
+    json.dump({"split": {"hinge": hinge.tolist(), "R": rodrigues(A, TILT_DEG).tolist(),
+                         "t": (SHIFT_LAT * L + np.array([0, 0, -1.0])).tolist()},
+               "depressed": {"t": [0, 0, -DEPRESS_DROP]},
+               "frame": {"L": L.tolist(), "A": A.tolist(), "plateau_centre": c.tolist(), "z_top": z_top}},
+              open(json_path, "w"), indent=1)
+    print(f"reduced fragments + graft void ({void.sum() * VOX ** 3 / 1000:.2f} ml) -> {red}")
+
     meshes = {k: to_mesh(moved == k, origin) for k in (1, 2, 3)}
     intact = to_mesh(lab > 0, origin)
     for k, m in meshes.items():

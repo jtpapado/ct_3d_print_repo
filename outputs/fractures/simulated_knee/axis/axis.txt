@@ -1,0 +1,4 @@
+# row1: point on axis (mm), row2: unit direction (distal), row3: proximal entry point
+-81.7092 -127.5718 459.1931
+0.0793 0.1499 -0.9855
+-95.7930 -154.2117 634.3204

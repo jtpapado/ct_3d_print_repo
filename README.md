@@ -30,6 +30,9 @@ ready for 3D printing.
 | `view_pengwin.py` | PENGWIN fractured-pelvis CT: label overlays, 3D fragment render, STL per fragment |
 | `simulate_knee_fracture.py` | Cuts and displaces a Schatzker II fracture (lateral split + depression) on a real knee from VSDFullBodyBoneModels |
 | `make_printable.py` | Repairs STLs (watertight/manifold), simplifies, places on the bed, optional scaling, and can fuse fragments into one solid |
+| `tibia_axis.py` | Tibial **anatomic axis**: best-fit line through 35 shaft cross-section centres; proximal entry point; renders + interactive HTML |
+| `tka_tibial_cut.py` | **TKA proximal tibial cut**: perpendicular to the anatomic axis, posterior slope (default 5°), depth = implant thickness (default 9 mm) below the medial plateau; schematic IM jig, cutting block, stylus and implant |
+| `plate_fixation.py` | **Anterolateral plate + screws** on the reduced fracture, following the Medartis APTUS 3.5 TriLock screw rules; checks every screw holds its fragment |
 
 ## Quick start (Ubuntu / WSL)
 
@@ -62,8 +65,49 @@ python scripts/make_printable.py out/print $S/tibia_1_tibia.stl $S/tibia_2_split
   --fuse tibia_fractured_onepiece $S/tibia_1_tibia.stl $S/tibia_2_split.stl $S/tibia_3_depressed.stl
 ```
 
+```bash
+# 6. Anatomic axis, TKA tibial cut, plate fixation (all on the simulated knee)
+python scripts/tibia_axis.py     $VSD/002.mat out/simulated_knee out/simulated_knee/axis R
+python scripts/tka_tibial_cut.py $VSD/002.mat out/simulated_knee out/simulated_knee/axis out/simulated_knee/tka_cut --slope 5 --poly 9
+python scripts/plate_fixation.py $VSD/002.mat out/simulated_knee out/simulated_knee/axis out/simulated_knee/plate_fixation
+# add --show to any of these for a rotatable window
+```
+
 Interactive 3D window: `python -c "import pyvista as pv; pv.read('print_ready/fractured_knee/tibia_fractured_onepiece.stl').plot()"`
 (on WSL, `unset LIBGL_ALWAYS_INDIRECT` if you get "Cannot create GLX context").
+
+## Interactive 3D views
+
+Self-contained HTML pages (plotly) - download and open in any browser; drag to rotate,
+scroll to zoom, click legend entries to hide parts:
+
+| File | Shows |
+|---|---|
+| `outputs/fractures/simulated_knee/axis/axis_3d.html` | Tibial anatomic axis, shaft section centres, proximal entry point |
+| `outputs/fractures/simulated_knee/tka_cut/tka_cut_3d.html` | TKA jig: IM rod, cutting block, stylus, sloped cut plane |
+| `outputs/fractures/simulated_knee/tka_cut/tka_after_cut_3d.html` | Tibia after the cut with a schematic 9 mm tibial component |
+| `outputs/fractures/simulated_knee/plate_fixation/plate_fixation_3d.html` | Reduced fracture, bone graft, anterolateral plate and TriLock screws |
+
+## Surgical planning results (simulated Schatzker II knee)
+
+**Anatomic axis** - fitted on 35 shaft sections (30-80 % of the 343 mm tibia), max deviation 1.6 mm;
+exits the plateau ~10 mm lateral and ~14 mm anterior of the plateau's bounding-box centre.
+
+**TKA tibial cut** - 0.00° coronal (perpendicular to the anatomic axis), 5.00° posterior slope,
+9 mm below the intact medial plateau. Lateral resection 11.4 mm (15.1 mm if unfractured); the depressed
+fragment lies entirely above the cut (no defect under the baseplate); 1.9 ml of the split fragment
+stays under the lateral rim and would need fixation.
+
+**Plate fixation** - fragments reduced (graft void 0.70 ml), plate position chosen by search (20°
+from lateral), 7 screws. Every screw is checked: 8-60 mm, ≤ 15° off its hole axis, ≥ 3 mm below the
+joint, ≥ 4 mm from other screws, and it must actually hold its fragment. Result: split fragment held
+(3 screws), elevated fragment supported by 1 raft screw. A second supporting raft screw would need more
+than ±15° from an anterolateral plate - a real limit of the locking system for this posterior depression.
+
+*Medartis reference:* the screw rules (titanium, 3.5 mm, ±15° multidirectional locking, 8-60 mm) are
+from the FDA 510(k) summary for the APTUS 2.8/3.5 TriLock system (K193633). Medartis lists no
+proximal tibia plate (FDA UDI database: its tibia plates are distal only), so the plate outline and
+3.2 mm thickness are generic, and the 2 mm length steps are an assumption.
 
 ## 3D printing
 
@@ -99,6 +143,10 @@ Files in `outputs/` and `print_ready/` are derived from these datasets and keep 
 | PlaTiF tibial plateau fractures | CC BY 4.0 | `outputs/fractures/platif/` | doi:10.5281/zenodo.18007397 |
 | FracAtlas | CC BY 4.0 | `outputs/fractures/fracatlas/` | doi:10.6084/m9.figshare.22363012; *Sci Data* 2023 |
 | PENGWIN Task 1 (pelvic fracture CT) | CC BY 4.0 | `outputs/fractures/pengwin/` | doi:10.5281/zenodo.10927452 |
+
+Implant reference: [FDA 510(k) K193633](https://510k.innolitics.com/device/K193633) (Medartis APTUS 2.8/3.5 TriLock)
+and the openFDA device UDI database (`api.fda.gov/device/udi.json`). Medartis and APTUS/TriLock are
+trademarks of Medartis AG; this project is not affiliated with Medartis, and the plate shown is not a Medartis product.
 
 Because the simulated knee and the print files are built from VSDFullBodyBoneModels meshes,
 **they may only be used non-commercially and must be shared under CC BY-NC-SA 4.0** with attribution.
