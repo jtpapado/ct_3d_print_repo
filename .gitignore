@@ -1,0 +1,16 @@
+# Raw datasets are downloaded with the scripts in download/ (tens of GB)
+data/
+*.zip
+*.dcm
+*.DCM
+*.mha
+*.mat
+
+# Large regenerable intermediates
+*.nii.gz
+*.npy
+
+# Python
+__pycache__/
+*.pyc
+.venv/
